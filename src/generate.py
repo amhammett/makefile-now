@@ -18,8 +18,6 @@ logger_stdout = logging.StreamHandler()
 logger_stdout.setFormatter(logging.Formatter(logging.BASIC_FORMAT))
 logging.getLogger().addHandler(logger_stdout)
 
-project_language = 'todo' # todo
-
 if (os.getenv('VERBOSE', False)):
     logger.setLevel(logging.DEBUG)
 
@@ -46,8 +44,8 @@ def generate_makefile(project):
 
         logging.debug('makefile={} alt={}'.format(source_makefile, source_makefile_alt))
 
-        target_makefile = PWD_DIR ## working dir?
-        shutil.copy2(source_makefile, os.path.join(PWD_DIR, 'Makefile'))
+        target_makefile = PWD_DIR  # working dir?
+        shutil.copy2(source_makefile, os.path.join(target_makefile, 'Makefile'))
 
     if (FEATURE_PROJECT_INIT):
         if (project == 'py'):
@@ -59,6 +57,7 @@ def parse_arguments(args=None):
     parser.add_argument('--project', default='defailt', help="project makefile")
     parser.add_argument('--force', help="overwrite existing", action='store_true')
     return parser.parse_args(args)
+
 
 def main():
     args = parse_arguments()
