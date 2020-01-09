@@ -1,0 +1,12 @@
+[paths]
+source =
+    src
+
+[report]
+fail_under = 30
+
+[run]
+branch = true
+source =
+    src
+    tests
