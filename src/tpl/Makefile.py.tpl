@@ -40,16 +40,21 @@ venv: ## virtual environment
 	$(virtualenv_path) venv --python=$(python_path)
 
 install: venv ## install all the things
-	$(venv_pip_path) install -r requirements.txt
+	$(venv_pip_path) install -r requirements.txt --no-warn-script-location
 
 # testing
-test: isort flake8 pytest ## test all the things
+test: json-lint isort flake8 pytest ## test all the things
 
 flake8:
 	$(venv_flake8_path) src/
 
 isort:
 	$(venv_isort_path) --quiet --check-only --recursive src
+
+json-lint:
+	@ if [ -d data ]; then \
+		python -m json.tool data/*.json >/dev/null ;\
+	fi
 
 pytest:
 	$(venv_pytest_path) --cov=src/ --cov-branch tests --verbose --capture=no
